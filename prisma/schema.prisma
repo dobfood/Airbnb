@@ -14,7 +14,7 @@ model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
   email          String?   @unique
-  emailVerified DateTime?
+  emailVerified  DateTime?
   image          String?
   hashedPassword String?
   createAt       DateTime  @default(now())
@@ -55,7 +55,7 @@ model Listing {
   roomCount     Int
   bathroomCount Int
   guestCount    Int
-  locationvalue String
+  locationValue String
   userId        String   @db.ObjectId
   price         Int
 
