@@ -17,8 +17,10 @@ import Button from "../Button";
 import { useRouter } from 'next/navigation';
 const LoginModal = () => {
     const router = useRouter()
+
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal()
+
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -29,7 +31,7 @@ const LoginModal = () => {
     },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
+      email: "",
       password: "",
     },
   });
@@ -52,6 +54,14 @@ const LoginModal = () => {
         }
     })
   };
+
+  const toggle = useCallback(()=>{
+      loginModal.onClose();
+      registerModal.onOpen();
+
+  },[loginModal,registerModal])
+
+
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Well come back" subtitle="Login to your account!" />
@@ -74,6 +84,8 @@ const LoginModal = () => {
       />
     </div>
   );
+
+
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3 ">
       <hr />
@@ -81,7 +93,7 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() =>{}}
+        onClick={() =>signIn('google')}
       />
       <Button
         outline
@@ -97,14 +109,14 @@ const LoginModal = () => {
     "
       >
         <div className="justify-center flex flex-row items-center gap-2">
-          <div>Already have an account ?</div>
+          <div>First time using Airbnb ?</div>
           <div
-            onClick={loginModal.onClose}
+            onClick={toggle}
             className="text-neutral-800
              cursor-pointer
              hover:underline"
           >
-            Log in
+            Create an account
           </div>
         </div>
       </div>
