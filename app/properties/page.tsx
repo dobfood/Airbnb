@@ -5,37 +5,34 @@ import getCurrentUser from "../actions/getCurrentUser";
 import PropertiesClient from "./PropertiesClient";
 import getListings from "../actions/getListings";
 
-const ProPertiesPage = async ()=>{
-    const currentUser = await getCurrentUser();
+const ProPertiesPage = async () => {
+  const currentUser = await getCurrentUser();
 
-    if(!currentUser){
-        return (
-            <ClientOnly>
-                <EmptyState
-                title="Authorized"
-                subtitle="Please login"/>
-            </ClientOnly>
-        )
-    }
-    const listings = await getListings({
-        userId:currentUser.id
-    })
-    if(listings.length ===0){
-        return (
-            <ClientOnly>
-                <EmptyState
-                title="No properties found"
-                subtitle="Look like you have no properties"/>
-            </ClientOnly>
-        )
-    }
+  if (!currentUser) {
     return (
-        <ClientOnly>
-            <PropertiesClient
-            listings={listings}
-            currentUser={currentUser}/>
-        </ClientOnly>
-    )
-}
+      <ClientOnly>
+        <EmptyState title="Authorized" subtitle="Please login" />
+      </ClientOnly>
+    );
+  }
+  const listings = await getListings({
+    userId: currentUser.id,
+  });
+  if (listings.length === 0) {
+    return (
+      <ClientOnly>
+        <EmptyState
+          title="No properties found"
+          subtitle="Look like you have no properties"
+        />
+      </ClientOnly>
+    );
+  }
+  return (
+    <ClientOnly>
+      <PropertiesClient listings={listings} currentUser={currentUser} />
+    </ClientOnly>
+  );
+};
 
-export default ProPertiesPage
+export default ProPertiesPage;
