@@ -13,6 +13,8 @@ const Map = dynamic(()=>import('../Map'),{
     ssr:false
 })
 
+
+
 interface ListingInfoProps {
   user: SafeUser | null;
   category:
