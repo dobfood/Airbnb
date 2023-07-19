@@ -17,8 +17,8 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
-  createAt       DateTime  @default(now())
-  updateAt       DateTime  @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   favoriteIds    String[]  @db.ObjectId
 
   accounts     Account[]
@@ -32,13 +32,13 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refesh_token      String? @db.String
+  refresh_token     String? @db.String
   access_token      String? @db.String
-  expores_at        Int?
+  expires_at        Int?
   token_type        String?
-  scope             String
+  scope             String?
   id_token          String? @db.String
-  seession_state    String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -50,7 +50,7 @@ model Listing {
   title         String
   description   String
   imageSrc      String
-  createAt      DateTime @default(now())
+  createdAt     DateTime @default(now())
   category      String
   roomCount     Int
   bathroomCount Int
@@ -59,8 +59,8 @@ model Listing {
   userId        String   @db.ObjectId
   price         Int
 
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reservation Reservation[]
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations Reservation[]
 }
 
 model Reservation {
@@ -70,7 +70,7 @@ model Reservation {
   startDate  DateTime
   endDate    DateTime
   totalPrice Int
-  createAt   DateTime @default(now())
+  createdAt  DateTime @default(now())
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
