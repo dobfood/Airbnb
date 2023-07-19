@@ -53,7 +53,7 @@ export default async function getListings(params: IListingsParams) {
     }
     if(startDate && endDate ){
         query.NOT = {
-            reservation :{
+            reservations :{
                 some:{
                     OR:[
                         {
@@ -71,13 +71,13 @@ export default async function getListings(params: IListingsParams) {
     const listings = await prisma.listing.findMany({
       where: query,
       orderBy: {
-        createAt: "desc",
+        createdAt: "desc",
       },
     });
 
     const safeListings = listings.map((listing) => ({
       ...listing,
-      createAt: listing.createAt.toISOString(),
+      createdAt: listing.createdAt.toISOString(),
     }));
     return safeListings;
   } catch (error: any) {
