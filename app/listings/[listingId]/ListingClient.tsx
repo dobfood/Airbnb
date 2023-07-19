@@ -1,14 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Reservation } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { differenceInCalendarDays, eachDayOfInterval, setDate } from "date-fns";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Range } from "react-date-range";
 
-import { SafeListing, SafeUser } from "../../types";
+import { SafeListing, SafeReservation, SafeUser } from "../../types";
 import { categories } from "../../components/categories";
 import Container from "../../components/Container";
 import ListingHead from "../../components/listings/ListingHead";
@@ -24,11 +23,11 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser;
   };
-  currentUser?: SafeUser | null;
+  currentUser?: SafeUser | null |undefined;
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({
@@ -61,7 +60,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
     }
     setIsLoading(true);
     axios
-      .post("/api.reservations", {
+      .post("/api/reservations", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
