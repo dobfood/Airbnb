@@ -1,4 +1,5 @@
 "use client";
+
 import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -16,7 +17,6 @@ const RegisterModal = () => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal()
   const [isLoading, setIsLoading] = useState(false);
-
 
   const {
     register,
